@@ -28,7 +28,7 @@
     border: 1px solid #ccc;
     margin-bottom: 10px;
   }
-  input[type="submit"] {
+  input[type="submit"], select {
     padding: 10px 20px;
     background-color: #007bff; /* blue color */
     color: white;
@@ -36,7 +36,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  input[type="submit"]:hover {
+  input[type="submit"]:hover, select:hover {
     background-color: #0056b3; /* darker blue color on hover */
   }
   .hidden {
@@ -55,6 +55,15 @@
     <input type="text" id="input" placeholder="Enter something...">
     <input type="submit" value="Go!">
   </form>
+  
+  <div>
+    <select onchange="navigate(this)">
+      <option disabled selected>Páginas</option>
+      <option value="https://ucasweb.netlify.app/">Ucas</option>
+      <option value="https://www.archidekt.com/search/decks?owner=Unable&ownerexact=true">MtG Decks</option>
+      <!-- Add more options here -->
+    </select>
+  </div>
 </div>
 
 <script>
@@ -66,13 +75,14 @@
     secretKeys.splice(-secretCode.length - 1, secretKeys.length - secretCode.length);
     if (secretKeys.join('') === secretCode) {
       document.getElementById('form').classList.remove('hidden');
+      document.getElementById('input').focus(); // Focus on input field when revealed
     }
   });
   
   var searchList = [
     { word: "google", site: "https://www.google.com" },
     { word: "youtube", site: "https://www.youtube.com" },
-    { word: "stackoverflow", site: "https://stackoverflow.com" }
+    { word: "tiagoman", site: "https://tiagoman.netlify.app/" }
     // Add more search words and corresponding sites here
   ];
 
@@ -85,6 +95,13 @@
     } else {
       alert('No matching site found for your input.');
       return false; // Prevent default form submission
+    }
+  }
+
+  function navigate(select) {
+    var selectedOption = select.options[select.selectedIndex].value;
+    if (selectedOption) {
+      window.location.href = selectedOption;
     }
   }
 </script>
