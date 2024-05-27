@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UT Site</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #007bff; /* blue color */
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    text-align: center;
+  }
+  .container {
+    margin-top: 80px; /* adjust according to your header height */
+    text-align: center;
+  }
+  input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff; /* blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  input[type="submit"]:hover {
+    background-color: #0056b3; /* darker blue color on hover */
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>UT Site</h1>
+</header>
+
+<div class="container">
+  <form id="form" class="hidden" onsubmit="return submitForm()">
+    <input type="text" id="input" placeholder="Enter something...">
+    <input type="submit" value="Go!">
+  </form>
+</div>
+
+<script>
+  var secretKeys = [];
+  var secretCode = 'utcsearchengine';
+
+  window.addEventListener('keydown', function(e) {
+    secretKeys.push(e.key);
+    secretKeys.splice(-secretCode.length - 1, secretKeys.length - secretCode.length);
+    if (secretKeys.join('') === secretCode) {
+      document.getElementById('form').classList.remove('hidden');
+    }
+  });
+  
+  var searchList = [
+    { word: "google", site: "https://www.google.com" },
+    { word: "youtube", site: "https://www.youtube.com" },
+    { word: "stackoverflow", site: "https://stackoverflow.com" }
+    // Add more search words and corresponding sites here
+  ];
+
+  function submitForm() {
+    var userInput = document.getElementById('input').value.toLowerCase();
+    var matchedSite = searchList.find(item => item.word === userInput);
+    if (matchedSite) {
+      window.location.href = matchedSite.site;
+      return false; // Prevent default form submission
+    } else {
+      alert('No matching site found for your input.');
+      return false; // Prevent default form submission
+    }
+  }
+</script>
+
+</body>
+</html>
